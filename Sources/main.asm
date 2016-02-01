@@ -74,7 +74,46 @@ Entry
             STAA PTJ     ;
 
 ; Tutorial 3 Code 
-			
+
+;ORG 1500 is already done in Setup Code section
+
+; Tutorial 4 Page 33
+BRANCH LDAA #$02
+       SUBA #$01
+       TBEQ A, BRANCH
+       LDAA #$9
+       WAI
+
+; Tutorial 4 Page 41
+BRANCHS LDAA #$01
+        SUBA #$01
+        TBEQ A, BRANCHS
+        LDAA #$9
+        WAI		
+        
+; Tutorial 4 Page 50
+           LDY #10
+
+LOOPOFF_IN NOP 
+           NOP
+           NOP
+           NOP
+           NOP
+           DBNE Y, LOOPOFF_IN
+
+; Tutorial 4 Page 53
+            LDY #2    ; set Y=10 as our outer loop
+LOOPOFF_OUT LDX #2 ;set X=50000 as our inner loop
+            LOOPOFF_IN  NOP
+                        NOP
+                        NOP
+                        NOP
+                        NOP 
+		                    DBNE x,LOOPOFF_IN	     ;decrement x, if x is not zero go to label         
+		                    DBNE y,LOOPOFF_OUT    ;decrement y, if y is not zero go to label 
+           
+           
+	
       
 ;*********************************************************************
 ;*                Interrupt Vectors (Don't Change)                   *
