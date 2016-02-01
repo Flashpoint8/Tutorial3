@@ -1,20 +1,16 @@
 ;*                       McMaster University                         *
 ;*********************************************************************               
 ;*                      2DP4 Microcontrollers                        *
-;*                          Lab Section 0X                           *
-;*                  First Name Last Name MACID #######               *
-;*                  First Name Last Name MACID #######               *
+;*                            Tutorial 3                             *
+;*                           Jan 31, 2016                            *
 ;*********************************************************************
 ;*********************************************************************
-;*                       Tutorial 3 Companion Code                         
+;*                       Tutorial 4 Companion Code                         
 ; BEFORE YOU START!!!!!!!!!!!!! READ THIS!!!!!!!!!!!!!!!!
 ;
-; Read Tutorial 3
-; You MUST enter values in memory locations $1600, $1602, $1605 or else
-; this will not work
-; First half turns on the Heart Beat LED
-; Second half executes the tutorial 2
-; Follow along using Tutorial 2 to trace the code as it executes                                                          
+; Read Tutorial 4
+;
+; Follow along using Tutorial 4 to trace the code as it executes                                                          
 ;*********************************************************************
 ;*********************************************************************
 ;*                            References                             
@@ -8557,7 +8553,7 @@ Entry
 ;
 ; Read Tutorial 3
 ; This code will access memory that will have random numbers (since this code does not assign any value to them)
-; Make sure you check each memroy location (select memory window, select window and address) to verify the value was copied over
+; Make sure you check each memroy location (select memory window, select memory from menubar and address) to verify the value was copied over
 ; Only look at the HNZVC bits in the CCR. 
 ; This codes uses Register X which we have not discussed in tutorial yet. 
 ;*********************************************************************
@@ -8577,7 +8573,7 @@ Entry
             NOP ;
             
       ;Inherent Mode II: All operand are internal CPU register (T3 p19)
-            INCA ;   
+            INCA ;  LOOK THIS UP IN THE INSTRUCTION SET! What does it do? What mode? What is the machine code?
       
       ;Immediate Mode: Operand IS the number (T3 p20)
             LDAA #$20       ;hex number, notice proceeding #
