@@ -18,7 +18,6 @@
 ;* HCS12/9S12 Textbook                                                                   
 ;*                                                                   
 ;*********************************************************************
-
 ;*********************************************************************
 ;*                   Setup Code (Don't Change)                       
 ;*********************************************************************
@@ -8522,7 +8521,7 @@ mNVFSEC_KEYEN1:     equ    %10000000
 		
 
 		        
-ROMStart    EQU  $0400  ; absolute address to place my code/constant data
+ROMStart    EQU  $1500  ; absolute address to place my code/constant data
 
 ; variable/data section
 
@@ -8568,48 +8567,50 @@ Entry
             STAA PTJ     ;
 
 ; Tutorial 3 Code 
-			
-      ;Inherent Mode II: No operand (T3 p19)
-            NOP ;
-            
-      ;Inherent Mode II: All operand are internal CPU register (T3 p19)
-            INCA ;  LOOK THIS UP IN THE INSTRUCTION SET! What does it do? What mode? What is the machine code?
+
+;ORG 1500 is already done in Setup Code section
+
+; Tutorial 4 Page 33
+BRANCH LDAA #$02
+       SUBA #$01
+       TBEQ A, BRANCH
+       LDAA #$9
+       ;We can't have WAI here since there is more code to follow	
+
+; Tutorial 4 Page 41
+; WARNING: THIS WILL STICK YOU IN AN INFINITE LOOP!
+; YOU WILL NEED TO COMMENT OUT THIS SECTION TO CONTINUE WITH THE TUTORIAL 
+
+;BRANCHS LDAA #$01
+;        SUBA #$01
+;        TBEQ A, BRANCHS
+;        LDAA #$9
+        ;We can't have WAI here since there is more code to follow	
+        
+; Tutorial 4 Page 50
+     LDY #10 ; Notice it appears as A in the register- why?
+
+LOOP NOP 
+     NOP
+     NOP
+     NOP
+     NOP
+     DBNE Y, LOOP
+
+; Tutorial 4 Page 53
+            LDY #2    ; set Y=10 as our outer loop
+LOOPOFF_OUT LDX #2 ;set X=50000 as our inner loop
+LOOPOFF_IN  NOP
+            NOP
+            NOP
+            NOP
+            NOP 
+		        DBNE x,LOOPOFF_IN	     ;decrement x, if x is not zero go to label         
+		        DBNE y,LOOPOFF_OUT    ;decrement y, if y is not zero go to label 
+           
+           
+	
       
-      ;Immediate Mode: Operand IS the number (T3 p20)
-            LDAA #$20       ;hex number, notice proceeding #
-            LDAA #%00100001 ;binary number, notice proceeding #
-            
-      ;Direct Mode: Address is only 8 bits long (T3 p21-22) 
-            LDAA $20 ; notice nothing in front of number. In this case whatever is loaded in $20 will be copied to Accumulator A
-            
-      ;Extended Mode: Address is 16 bits long (T3 p21-22)
-            LDAA $1600; notice nothing in front of number. In this case whatever is loaded in $1600 will be copied to Accumulator A           
-
-      ;Indexed Addressing: Constant Offset (T3 p23-27)
-            LDX #$1600 ; this uses register x which we have not discussed in tutorial. We will!
-            LDAA 2,X
-            
-      ;Indexed Addressing: Offset in Accumulator (T3 p23-27)
-            LDAB #$04
-            LDAA B,X
-
-      ;Assembler Directive (T3 p29-30)
-            ;WAI; UNCOMMENT TO USE. notice that this will not take any space in memory since it is an instruction to the assembler
-            
-      ;CCR (T3 p41-42)
-            LDAA #$79
-            LDAB #$34
-            
-            SBA ; LOOK THIS UP IN THE INSTRUCTION SET! What does it do? What mode? What CCR bits should be effected? Check only HNZVC
-            
-      ;CCR (T3 p41-42)
-            LDAA #$34
-            LDAB #$79
-            
-            SBA ; LOOK THIS UP IN THE INSTRUCTION SET! What does it do? What mode? What CCR bits should be effected? Check only HNZVC                  
-     
-            WAI
-
 ;*********************************************************************
 ;*                Interrupt Vectors (Don't Change)                   *
 ;*********************************************************************
